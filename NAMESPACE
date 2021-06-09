@@ -1,0 +1,3 @@
+useDynLib(phylo, .registration=TRUE)
+exportPattern("^[[:alpha:]]+")
+S3method(plot, tree)

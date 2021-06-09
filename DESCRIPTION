@@ -1,0 +1,11 @@
+Package: phylo
+Type: Package
+Title: phylo:
+Version: 1.0
+Date: 2019-10-07
+Author: Michael C. Grundler
+Maintainer: Michael C. Grundler <mcgrundler@gmail.com>
+Description: The phylo package implements a polytomous tree data model and
+  C API for working with phylogenies.
+NeedsCompilation: yes
+License: CC0
