@@ -9,3 +9,4 @@ Description: The phylo package implements a polytomous tree data model and
   C API for working with phylogenies.
 NeedsCompilation: yes
 License: CC0
+RoxygenNote: 7.1.2
