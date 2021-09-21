@@ -271,7 +271,7 @@ void phy_node_free(struct phy_node *node)
         fun = (void(*)(struct phy_node *))R_GetCCallable(
             "phylo", "phy_node_free");
     }
-    return fun(node);
+    fun(node);
 }
 
 void phy_node_add_child(struct phy_node *p, struct phy_node *q)
@@ -282,7 +282,7 @@ void phy_node_add_child(struct phy_node *p, struct phy_node *q)
         fun = (void(*)(struct phy_node *, struct phy_node *))R_GetCCallable(
             "phylo", "phy_node_add_child");
     }
-    return fun(p, q);
+    fun(p, q);
 }
 
 struct phy_node *phy_node_prune(struct phy_node *p, struct phy_node *q)
@@ -359,7 +359,7 @@ void phy_free(struct phy *phy)
     {
         fun = (void(*)(struct phy *))R_GetCCallable("phylo", "phy_free");
     }
-    return fun(phy);
+    fun(phy);
 }
 
 struct phy_cursor *phy_cursor_prepare(
@@ -395,7 +395,7 @@ void phy_cursor_prepare_v2(
         fun = (void(*)(struct phy *, struct phy_node *, struct phy_cursor *, int, int))
             R_GetCCallable("phylo", "phy_cursor_prepare_v2");
     }
-    return fun(phy, node, cursor, visit, order);
+    fun(phy, node, cursor, visit, order);
 }
 
 struct phy_node *phy_cursor_step(struct phy_cursor *cursor)
@@ -450,7 +450,7 @@ void phy_node_rotate(int n, struct phy_node **nodes, struct phy *phy)
         fun = (void(*)(int, struct phy_node **, struct phy *))R_GetCCallable(
             "phylo", "phy_node_rotate");
     }
-    return fun(n, nodes, phy);
+    fun(n, nodes, phy);
 }
 
 struct phy *phy_duplicate(struct phy *phy)
@@ -472,7 +472,7 @@ void phy_reroot(struct phy_node *node, struct phy **in, struct phy **out)
         fun = (void(*)(struct phy_node *, struct phy **, struct phy **))
             R_GetCCallable("phylo", "phy_reroot");
     }
-    return fun(node, in, out);
+    fun(node, in, out);
 }
 
 void phy_unroot(struct phy **in, struct phy **out)
@@ -483,7 +483,7 @@ void phy_unroot(struct phy **in, struct phy **out)
         fun = (void(*)(struct phy **, struct phy **))R_GetCCallable(
             "phylo", "phy_unroot");
     }
-    return fun(in, out);
+    fun(in, out);
 }
 
 double phy_node_brlen(struct phy_node *node)
@@ -623,7 +623,7 @@ void phy_node_swap(struct phy_node *a, struct phy_node *b)
         fun = (void(*)(struct phy_node *, struct phy_node *))R_GetCCallable(
             "phylo", "phy_node_swap");
     }
-    return fun(a, b);
+    fun(a, b);
 }
 
 void phy_ladderize(struct phy *phy, int *perm)
@@ -634,7 +634,7 @@ void phy_ladderize(struct phy *phy, int *perm)
         fun = (void(*)(struct phy *, int *))R_GetCCallable(
             "phylo", "phy_ladderize");
     }
-    return fun(phy, perm);
+    fun(phy, perm);
 }
 
 struct phy_node *phy_root(struct phy *phy)
@@ -678,7 +678,7 @@ void phy_node_add_data(
         fun = (void(*)(struct phy_node *, void *, void (*)(void *)))R_GetCCallable(
             "phylo", "phy_node_add_data");
     }
-    return fun(node, data, data_free);
+    fun(node, data, data_free);
 }
 
 void *phy_node_data(struct phy_node *node)
@@ -701,7 +701,7 @@ void phy_node_spanning_pair(
         fun = (void(*)(struct phy_node *, const char **, const char **))
             R_GetCCallable("phylo", "phy_node_spanning_pair");
     }
-    return fun(node, a, b);
+    fun(node, a, b);
 }
 
 
@@ -745,7 +745,7 @@ void phy_node_foreach(
             void *))
         R_GetCCallable("phylo", "phy_node_foreach");
     }
-    return fun(phy, node, visit, order, FUN, param);
+    fun(phy, node, visit, order, FUN, param);
 }
 
 int phy_cursor_alloc(struct phy_cursor **cursor)
@@ -767,7 +767,7 @@ void phy_cursor_free(struct phy_cursor *cursor)
         fun = (void(*)(struct phy_cursor *))R_GetCCallable(
             "phylo", "phy_cursor_free");
     }
-    return fun(cursor);
+    fun(cursor);
 }
 
 const char *phy_node_label(struct phy_node *node)
