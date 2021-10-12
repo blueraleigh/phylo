@@ -211,8 +211,19 @@ struct phy_node *phy_node_find(struct phy *phy, const char *label);
 
 // Attach arbitrary client data to a node, passing a destructor (may be NULL).
 // Any previously added data is removed (and free'd).
-void phy_node_add_data(
+void phy_node_set_data(
     struct phy_node *node, void *data, void (*data_free)(void *));
+
+// Set the index for a node.
+void phy_node_set_index(struct phy_node *node, int index);
+
+// Set the length of the branch subtending a node.
+void phy_node_set_brlen(
+    struct phy_node *node, double brlen);
+
+// Set the label for a node.
+void phy_node_set_label(
+    struct phy_node *node, const char *label);
 
 // Return client data attached to a node
 void *phy_node_data(struct phy_node *node);
@@ -258,7 +269,7 @@ int phy_node_alloc(struct phy_node **node)
     if (!fun)
     {
         fun = (int(*)(struct phy_node **))R_GetCCallable(
-            "phy_node_alloc", "phylo");
+            "phylo", "phy_node_alloc");
     }
     return fun(node);
 }
@@ -669,16 +680,49 @@ struct phy_node *phy_node_find(struct phy *phy, const char *label)
     return fun(phy, label);
 }
 
-void phy_node_add_data(
+void phy_node_set_data(
     struct phy_node *node, void *data, void (*data_free)(void *))
 {
-    static void(*fun)(struct phy_node *, void *, void (*)(void *)) = NULL;
+    static void (*fun)(struct phy_node *, void *, void (*)(void *)) = NULL;
     if (!fun)
     {
         fun = (void(*)(struct phy_node *, void *, void (*)(void *)))R_GetCCallable(
-            "phylo", "phy_node_add_data");
+            "phylo", "phy_node_set_data");
     }
     fun(node, data, data_free);
+}
+
+void phy_node_set_index(struct phy_node *node, int index)
+{
+    static void (*fun)(struct phy_node *, int) = NULL;
+    if (!fun)
+    {
+        fun = (void(*)(struct phy_node *, int))R_GetCCallable(
+            "phylo", "phy_node_set_index");
+    }
+    fun(node, index);
+}
+
+void phy_node_set_brlen(struct phy_node *node, double brlen)
+{
+    static void (*fun)(struct phy_node *, double) = NULL;
+    if (!fun)
+    {
+        fun = (void(*)(struct phy_node *, double))R_GetCCallable(
+            "phylo", "phy_node_set_brlen");
+    }
+    fun(node, brlen);
+}
+
+void phy_node_set_label(struct phy_node *node, const char *label)
+{
+    static void (*fun)(struct phy_node *, const char *) = NULL;
+    if (!fun)
+    {
+        fun = (void(*)(struct phy_node *, const char *))R_GetCCallable(
+            "phylo", "phy_node_set_label");
+    }
+    fun(node, label);
 }
 
 void *phy_node_data(struct phy_node *node)

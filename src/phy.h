@@ -198,8 +198,19 @@ struct phy_node *phy_node_find(struct phy *phy, const char *label);
 
 // Attach arbitrary client data to a node, passing a destructor (may be NULL).
 // Any previously added data is removed (and free'd).
-void phy_node_add_data(
+void phy_node_set_data(
     struct phy_node *node, void *data, void (*data_free)(void *));
+
+// Set the index for a node.
+void phy_node_set_index(struct phy_node *node, int index);
+
+// Set the length of the branch subtending a node.
+void phy_node_set_brlen(
+    struct phy_node *node, double brlen);
+
+// Set the label for a node.
+void phy_node_set_label(
+    struct phy_node *node, const char *label);
 
 // Return client data attached to a node
 void *phy_node_data(struct phy_node *node);

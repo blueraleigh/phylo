@@ -109,7 +109,13 @@ void attribute_visible R_init_phylo(DllInfo *info)
     R_RegisterCCallable(
         "phylo", "phy_node_find", (DL_FUNC) &phy_node_find);
     R_RegisterCCallable(
-        "phylo", "phy_node_add_data", (DL_FUNC) &phy_node_add_data);
+        "phylo", "phy_node_set_data", (DL_FUNC) &phy_node_set_data);
+    R_RegisterCCallable(
+        "phylo", "phy_node_set_index", (DL_FUNC) &phy_node_set_index);
+    R_RegisterCCallable(
+        "phylo", "phy_node_set_brlen", (DL_FUNC) &phy_node_set_brlen);
+    R_RegisterCCallable(
+        "phylo", "phy_node_set_label", (DL_FUNC) &phy_node_set_label);
     R_RegisterCCallable(
         "phylo", "phy_node_data", (DL_FUNC) &phy_node_data);
     R_RegisterCCallable(

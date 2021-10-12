@@ -1617,7 +1617,7 @@ struct phy_node *phy_node_find(struct phy *phy, const char *label)
 }
 
 
-void phy_node_add_data(
+void phy_node_set_data(
     struct phy_node *node,
     void *data,
     void (*data_free)(void *)
@@ -1626,6 +1626,25 @@ void phy_node_add_data(
         node->data_free(node->data);
     node->data = data;
     node->data_free = data_free;
+}
+
+
+void phy_node_set_index(struct phy_node *node, int index)
+{
+    node->index = index;
+}
+
+
+void phy_node_set_brlen(struct phy_node *node, double brlen)
+{
+    node->brlen = brlen;
+}
+
+
+void phy_node_set_label(struct phy_node *node, const char *label)
+{
+    node->lab = calloc(strlen(label)+1, sizeof(char));
+    strncpy(node->lab, label, strlen(label));
 }
 
 
