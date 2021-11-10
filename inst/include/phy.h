@@ -233,6 +233,11 @@ void *phy_node_data(struct phy_node *node);
 void phy_node_spanning_pair(
     struct phy_node *node, const char **a, const char **b);
 
+// Return the indices of the most distant terminal node's whose most
+// recent common ancestor is *node and store them in *a and *b.
+void phy_node_spanning_index(
+    struct phy_node *node, int *a, int *b);
+
 // Return the most recent common ancestor of a and b.
 struct phy_node *phy_node_mrca(
     struct phy *phy, struct phy_node *a, struct phy_node *b);
@@ -744,6 +749,18 @@ void phy_node_spanning_pair(
     {
         fun = (void(*)(struct phy_node *, const char **, const char **))
             R_GetCCallable("phylo", "phy_node_spanning_pair");
+    }
+    fun(node, a, b);
+}
+
+void phy_node_spanning_index(
+    struct phy_node *node, int *a, int *b)
+{
+    static void(*fun)(struct phy_node *, int *, int *) = NULL;
+    if (!fun)
+    {
+        fun = (void(*)(struct phy_node *, int *, int *))
+            R_GetCCallable("phylo", "phy_node_spanning_index");
     }
     fun(node, a, b);
 }

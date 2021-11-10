@@ -121,6 +121,8 @@ void attribute_visible R_init_phylo(DllInfo *info)
     R_RegisterCCallable(
         "phylo", "phy_node_spanning_pair", (DL_FUNC) &phy_node_spanning_pair);
     R_RegisterCCallable(
+        "phylo", "phy_node_spanning_index", (DL_FUNC) &phy_node_spanning_index);
+    R_RegisterCCallable(
         "phylo", "phy_node_mrca", (DL_FUNC) &phy_node_mrca);
     R_RegisterCCallable(
         "phylo", "phy_node_foreach", (DL_FUNC) &phy_node_foreach);

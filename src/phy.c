@@ -1675,6 +1675,27 @@ void phy_node_spanning_pair(
 }
 
 
+void phy_node_spanning_index(
+    struct phy_node *node,
+    int *a,
+    int *b
+){
+    if (!node->ndesc)
+    {
+        *a = node->index;
+        *b = node->index;
+    }
+    else
+    {
+        *b = node->lastvisit->index;
+        node = node->lfdesc;
+        while (node->lfdesc)
+            node = node->lfdesc;
+        *a = node->index;
+    }
+}
+
+
 struct phy_node *phy_node_mrca(
     struct phy *phy,
     struct phy_node *a,
