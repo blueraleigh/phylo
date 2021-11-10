@@ -125,19 +125,68 @@ plot.tree = function(x, ...) {
 }
 
 
-draw.arc = function(r, theta, asp, lwd, col, grain=30) {
-    arcs = local({
-        i = 1
-        function(r, theta, asp, lwd, col, grain) {
-            zz = seq(theta[i,1], theta[i,2], length.out=grain+1)
-            arcs = cbind(zz[-(grain+1)], zz[-1])
-            x0 = r[i] * cos(arcs[, 1])
-            y0 = r[i] * asp * sin(arcs[, 1])
-            x1 = r[i] * cos(arcs[, 2])
-            y1 = r[i] * asp * sin(arcs[, 2])
-            segments(x0, y0, x1, y1, lwd=lwd[i], col=col[i])
-            i <<- i + 1
-        }
-    })
-    replicate(nrow(theta), arcs(r, theta, asp, lwd, col, grain))
+#draw.arc = function(r, theta, asp, lwd, col, grain=30) {
+#    arcs = local({
+#        i = 1
+#        function(r, theta, asp, lwd, col, grain) {
+#            zz = seq(theta[i,1], theta[i,2], length.out=grain+1)
+#            arcs = cbind(zz[-(grain+1)], zz[-1])
+#            x0 = r[i] * cos(arcs[, 1])
+#            y0 = r[i] * asp * sin(arcs[, 1])
+#            x1 = r[i] * cos(arcs[, 2])
+#            y1 = r[i] * asp * sin(arcs[, 2])
+#            segments(x0, y0, x1, y1, lwd=lwd[i], col=col[i])
+#            i <<- i + 1
+#        }
+#    })
+#    replicate(nrow(theta), arcs(r, theta, asp, lwd, col, grain))
+#}
+
+#draw.arc = function(r, theta, asp, lwd, col) {
+#    
+#    arc = function(r, theta, asp, lwd, col) {
+#
+#        step = 2*pi / 100
+#        grain = ceiling(abs(diff(theta)) / step)
+#
+#        zz = seq(theta[1], theta[2], length.out=grain+1)
+#        arcs = cbind(zz[-(grain+1)], zz[-1])
+#        x0 = r * cos(arcs[, 1])
+#        y0 = r * asp * sin(arcs[, 1])
+#        x1 = r * cos(arcs[, 2])
+#        y1 = r * asp * sin(arcs[, 2])
+#        segments(x0, y0, x1, y1, lwd=lwd, col=col)
+#    }
+#
+#    for (i in 1:nrow(theta))
+#        arc(r[i], theta[i,], asp, lwd[i], col[i])
+#}
+
+
+draw.arc = function(r, theta, asp, lwd, col) {
+    
+    arc = function(r, theta, asp, lwd, col) {
+        step = 2*pi / 100
+        grain = ceiling(abs(diff(theta)) / step)
+        zz = seq(theta[1], theta[2], length.out=grain+1)
+        arcs = cbind(zz[-(grain+1)], zz[-1])
+        x0 = r * cos(arcs[, 1])
+        y0 = r * asp * sin(arcs[, 1])
+        x1 = r * cos(arcs[, 2])
+        y1 = r * asp * sin(arcs[, 2])
+        segs = c(x0, y0, x1, y1, rep(lwd, nrow(arcs)), rep(col, nrow(arcs)))
+        return (matrix(segs, ncol=6))
+    }
+
+    s = do.call(rbind, lapply(1:nrow(theta), function(i) {
+        arc(r[i], theta[i,], asp, lwd[i], col[i])
+    }))
+
+    segments(
+        as.numeric(s[,1]), 
+        as.numeric(s[,2]), 
+        as.numeric(s[,3]), 
+        as.numeric(s[,4]), 
+        lwd=as.numeric(s[,5]), 
+        col=s[,6])
 }
