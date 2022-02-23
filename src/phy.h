@@ -183,7 +183,7 @@ int phy_ntip(struct phy *phy);
 void phy_node_swap(struct phy_node *a, struct phy_node *b);
 
 // Ladderize the phylogeny
-void phy_ladderize(struct phy *phy, int *perm);
+void phy_ladderize(struct phy *phy, int *n, int *perm);
 
 // Return the root node of a phylogeny
 struct phy_node *phy_root(struct phy *phy);

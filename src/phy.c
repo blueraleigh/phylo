@@ -1497,30 +1497,46 @@ void phy_node_swap(struct phy_node *a, struct phy_node *b)
     if (!a->anc || !b->anc || a->anc != b->anc)
         return;
 
-    struct phy_node *prev;
-    struct phy_node *next;
+    if (a->next == b) {
+        a->next = b->next;
+        b->next = a;
+        if (a->prev)
+            a->prev->next = b;
+        b->prev = a->prev;
+        a->prev = b;
+    } else if (b->next == a) {
+        b->next = a->next;
+        a->next = b;
+        if (b->prev)
+            b->prev->next = a;
+        a->prev = b->prev;
+        b->prev = a;
+    } else {
+        struct phy_node *prev;
+        struct phy_node *next;
 
-    next = a->next;
-    prev = a->prev;
+        next = a->next;
+        prev = a->prev;
 
-    a->next = b->next;
-    a->prev = b->prev;
-    if (b->next)
-        b->next->prev = a;
-    if (b->prev)
-        b->prev->next = a;
-    b->next = next;
-    b->prev = prev;
-    if (next)
-        next->prev = b;
-    if (prev)
-        prev->next = b;
+        a->next = b->next;
+        a->prev = b->prev;
+        if (b->next)
+            b->next->prev = a;
+        if (b->prev)
+            b->prev->next = a;
+        b->next = next;
+        b->prev = prev;
+        if (next)
+            next->prev = b;
+        if (prev)
+            prev->next = b;
+    }
     if (a->anc->lfdesc == a)
         a->anc->lfdesc = b;
 }
 
 
-void phy_ladderize(struct phy *phy, int *perm)
+void phy_ladderize(struct phy *phy, int *n, int *perm)
 {
     int i = 0, j = 0, k = 0, sorted;
     struct phy_node *d;
@@ -1540,7 +1556,7 @@ void phy_ladderize(struct phy *phy, int *perm)
             d = p->lfdesc;
             while (d && d->next)
             {
-                if (d->ndesc > d->next->ndesc)
+                if (n[d->index] > n[d->next->index])
                 {
                     ++sorted;
                     phy_node_swap(d, d->next);

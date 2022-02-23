@@ -19,7 +19,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(phylo_phy_node_descendants, 4),
     CALLDEF(phylo_phy_extract_clade, 2),
     CALLDEF(phylo_phy_extract_subtree, 3),
-    CALLDEF(phylo_phy_ladderize, 1),
+    CALLDEF(phylo_phy_ladderize, 2),
     CALLDEF(phylo_phy_node_rotate, 2),
     CALLDEF(phylo_plot_cartesian, 3),
     CALLDEF(phylo_plot_polar, 2),

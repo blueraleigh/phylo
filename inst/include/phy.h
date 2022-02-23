@@ -196,7 +196,7 @@ int phy_ntip(struct phy *phy);
 void phy_node_swap(struct phy_node *a, struct phy_node *b);
 
 // Ladderize the phylogeny
-void phy_ladderize(struct phy *phy, int *perm);
+void phy_ladderize(struct phy *phy, int *n, int *perm);
 
 // Return the root node of a phylogeny
 struct phy_node *phy_root(struct phy *phy);
@@ -642,15 +642,15 @@ void phy_node_swap(struct phy_node *a, struct phy_node *b)
     fun(a, b);
 }
 
-void phy_ladderize(struct phy *phy, int *perm)
+void phy_ladderize(struct phy *phy, int *n, int *perm)
 {
-    static void(*fun)(struct phy *, int *) = NULL;
+    static void(*fun)(struct phy *, int *, int *) = NULL;
     if (!fun)
     {
-        fun = (void(*)(struct phy *, int *))R_GetCCallable(
+        fun = (void(*)(struct phy *, int *, int *))R_GetCCallable(
             "phylo", "phy_ladderize");
     }
-    fun(phy, perm);
+    fun(phy, n, perm);
 }
 
 struct phy_node *phy_root(struct phy *phy)

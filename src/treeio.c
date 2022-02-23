@@ -273,13 +273,13 @@ SEXP phylo_phy_extract_subtree(SEXP rtree, SEXP ntip, SEXP tips)
 }
 
 
-SEXP phylo_phy_ladderize(SEXP rtree)
+SEXP phylo_phy_ladderize(SEXP rtree, SEXP ndesc)
 {
     struct phy *phy = (struct phy *)R_ExternalPtrAddr(rtree);
 
     SEXP perm = PROTECT(allocVector(INTSXP, phy_nnode(phy)));
 
-    phy_ladderize(phy, INTEGER(perm));
+    phy_ladderize(phy, INTEGER(ndesc), INTEGER(perm));
 
     for (int i = 0; i < phy_nnode(phy); ++i)
         INTEGER(perm)[i] += 1;

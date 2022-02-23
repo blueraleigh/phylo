@@ -16,7 +16,7 @@ SEXP phylo_phy_node_children(SEXP, SEXP);
 SEXP phylo_phy_node_descendants(SEXP, SEXP, SEXP, SEXP);
 SEXP phylo_phy_extract_clade(SEXP, SEXP);
 SEXP phylo_phy_extract_subtree(SEXP, SEXP, SEXP);
-SEXP phylo_phy_ladderize(SEXP);
+SEXP phylo_phy_ladderize(SEXP, SEXP);
 SEXP phylo_phy_node_rotate(SEXP, SEXP);
 /* treeplot.c */
 SEXP phylo_plot_cartesian(SEXP, SEXP, SEXP);
